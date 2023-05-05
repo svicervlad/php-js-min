@@ -1,0 +1,16 @@
+[package]
+name = "rust-php-js-min"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+ext-php-rs = "0.10.0"
+minify-js = "0.5.6"
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+strip = "debuginfo"
