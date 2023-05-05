@@ -5,6 +5,7 @@ $url = 'https://raw.githubusercontent.com/drupal/core/9.4.x/themes/olivero/js/na
 $non_minified_js = file_get_contents($url);
 
 // Minify js
-$minified_js = js_minify($non_minified_js);
+$minifier= new Minifier();
+$minified_js = $minifier->jsMinify($non_minified_js);
 
 var_dump($minified_js);
