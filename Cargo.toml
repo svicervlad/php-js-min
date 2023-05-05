@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 ext-php-rs = "0.10.0"
-minify-js = "0.5.6"
+minifier = "0.2.2"
 
 [lib]
 crate-type = ["cdylib"]
