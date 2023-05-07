@@ -7,7 +7,9 @@
 		"dockerfile": "Dockerfile"
 	},
 	"features": {
-		"ghcr.io/devcontainers/features/php:1": {}
+		"ghcr.io/devcontainers/features/php:1": {},
+		"ghcr.io/devcontainers-contrib/features/actionlint": {},
+		"ghcr.io/devcontainers-contrib/features/actions-runner": {}
 	},
 
 	// Use 'mounts' to make the cargo cache persistent in a Docker Volume.
@@ -31,6 +33,9 @@
 	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
+			"extensions": [
+				"GitHub.vscode-github-actions",
+			],
 			"settings": {
 				"intelephense.stubs": [
 					"apache",

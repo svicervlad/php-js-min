@@ -19,4 +19,4 @@ jobs:
     - name: Install cargo-php
       run: cargo install cargo-php --verbose
     - name: Build ext
-      run: cargo php install --release --yes
+      run: cargo build --release
