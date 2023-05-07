@@ -20,3 +20,6 @@ jobs:
       run: cargo install cargo-php --verbose
     - name: Build ext
       run: cargo build --release
+    - name: Run test.php with librust_php_js_min.so extension
+      run: php -dextension=./target/release/librust_php_js_min.so -f test.php
+
