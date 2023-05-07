@@ -23,3 +23,9 @@ cargo php stubs
 $minifier = new Minifier();
 $minified_js = $minifier->jsMinify($js_code);
 ```
+
+# Testing
+
+```bash
+php -f test.php
+```
