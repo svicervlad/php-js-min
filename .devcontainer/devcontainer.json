@@ -8,7 +8,7 @@
 	},
 	"features": {
 		"ghcr.io/devcontainers/features/php:1": {}
-	}
+	},
 
 	// Use 'mounts' to make the cargo cache persistent in a Docker Volume.
 	// "mounts": [
@@ -26,10 +26,90 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "rustc --version",
+	"postCreateCommand": "cargo install cargo-php && cargo php stubs",
 
 	// Configure tool-specific properties.
-	// "customizations": {},
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"intelephense.stubs": [
+					"apache",
+					"bcmath",
+					"bz2",
+					"calendar",
+					"com_dotnet",
+					"Core",
+					"ctype",
+					"curl",
+					"date",
+					"dba",
+					"dom",
+					"enchant",
+					"exif",
+					"FFI",
+					"fileinfo",
+					"filter",
+					"fpm",
+					"ftp",
+					"gd",
+					"gettext",
+					"gmp",
+					"hash",
+					"iconv",
+					"imap",
+					"intl",
+					"json",
+					"ldap",
+					"libxml",
+					"mbstring",
+					"meta",
+					"mysqli",
+					"oci8",
+					"odbc",
+					"openssl",
+					"pcntl",
+					"pcre",
+					"PDO",
+					"pdo_ibm",
+					"pdo_mysql",
+					"pdo_pgsql",
+					"pdo_sqlite",
+					"pgsql",
+					"Phar",
+					"posix",
+					"pspell",
+					"random",
+					"readline",
+					"Reflection",
+					"session",
+					"shmop",
+					"SimpleXML",
+					"snmp",
+					"soap",
+					"sockets",
+					"sodium",
+					"SPL",
+					"sqlite3",
+					"standard",
+					"superglobals",
+					"sysvmsg",
+					"sysvsem",
+					"sysvshm",
+					"tidy",
+					"tokenizer",
+					"xml",
+					"xmlreader",
+					"xmlrpc",
+					"xmlwriter",
+					"xsl",
+					"Zend OPcache",
+					"zip",
+					"zlib",
+					"/workspaces/php-js-min/rust-php-js-min.stubs.php"
+				],
+			}
+		}
+	},
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
