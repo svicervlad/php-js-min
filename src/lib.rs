@@ -1,8 +1,11 @@
 #![cfg_attr(windows, feature(abi_vectorcall))]
 
+use std::collections::HashMap;
+
 use ext_php_rs::prelude::*;
 use minifier::js::minify as js_minify;
 use minifier::css::minify as css_minify;
+use tokio::runtime::Runtime;
 
 
 /// The Minifier class.
@@ -38,6 +41,38 @@ impl Minifier {
         let js_minified = js_minify(&code[..]);
         js_minified.to_string()
     }
+
+    /// Bulk async version of js_minify
+    ///
+    /// @param array $code
+    ///   The JavaScript code to minify.
+    ///   The array key is the name of the file.
+    ///   The array value is the JavaScript code.
+    ///
+    /// @return array
+    ///   The minified JavaScript code.
+    #[php_method]
+    fn js_minify_async(&self, data: HashMap<String, String>) -> HashMap<String, String> {
+        let mut result = HashMap::new();
+        // Use tokio to run the tasks concurrently
+        let mut tasks = Vec::new();
+        let rt = Runtime::new().unwrap();
+        for (key, value) in data {
+            let task = rt.spawn(async move {
+                let js_minified = js_minify(&value[..]);
+                (key, js_minified.to_string())
+            });
+            tasks.push(task);
+        }
+        for task in tasks {
+            futures::executor::block_on(async{
+                let (key, value) = task.await.unwrap();
+                result.insert(key, value);
+            })
+        }
+        result
+    }
+
 
     /// Minifies the given CSS code.
     ///
