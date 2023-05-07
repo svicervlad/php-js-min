@@ -44,7 +44,7 @@ impl Minifier {
 
     /// Bulk async version of js_minify
     ///
-    /// @param array $code
+    /// @param array $data
     ///   The JavaScript code to minify.
     ///   The array key is the name of the file.
     ///   The array value is the JavaScript code.
@@ -85,6 +85,37 @@ impl Minifier {
     pub fn css_minify(&self, code: String) -> String {
         let css_minified = css_minify(&code[..]).expect("minification failed");
         css_minified.to_string()
+    }
+
+    /// Bulk async version of css_minify
+    ///
+    /// @param array $data
+    ///   The CSS code to minify.
+    ///   The array key is the name of the file.
+    ///   The array value is the CSS code.
+    ///
+    /// @return array
+    ///   The minified CSS code.
+    #[php_method]
+    fn css_minify_async(&self, data: HashMap<String, String>) -> HashMap<String, String> {
+        let mut result = HashMap::new();
+        // Use tokio to run the tasks concurrently
+        let mut tasks = Vec::new();
+        let rt = Runtime::new().unwrap();
+        for (key, value) in data {
+            let task = rt.spawn(async move {
+                let css_minified = css_minify(&value[..]).expect("minification failed");
+                (key, css_minified.to_string())
+            });
+            tasks.push(task);
+        }
+        for task in tasks {
+            futures::executor::block_on(async{
+                let (key, value) = task.await.unwrap();
+                result.insert(key, value);
+            })
+        }
+        result
     }
 }
 

@@ -31,7 +31,7 @@ namespace {
         /**
          * Bulk async version of js_minify
          *
-         * @param array $code
+         * @param array $data
          *   The JavaScript code to minify.
          *   The array key is the name of the file.
          *   The array value is the JavaScript code.
@@ -51,5 +51,18 @@ namespace {
          *   The minified CSS code.
          */
         public function cssMinify(string $code): string {}
+
+        /**
+         * Bulk async version of css_minify
+         *
+         * @param array $data
+         *   The CSS code to minify.
+         *   The array key is the name of the file.
+         *   The array value is the CSS code.
+         *
+         * @return array
+         *   The minified CSS code.
+         */
+        public function cssMinifyAsync(array $data): array {}
     }
 }
