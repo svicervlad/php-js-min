@@ -124,3 +124,43 @@ impl Minifier {
 pub fn module(module: ModuleBuilder) -> ModuleBuilder {
     module
 }
+
+// Tests
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_js_minify() {
+        let minifier = Minifier::default();
+        let js_code = "function test() { return 1 + 1; }".to_string();
+        let js_minified = minifier.js_minify(js_code);
+        assert_eq!(js_minified, "function test(){return 1+1}");
+    }
+
+    #[test]
+    fn test_css_minify() {
+        let minifier = Minifier::default();
+        let css_code = "body { color: red; }".to_string();
+        let css_minified = minifier.css_minify(css_code);
+        assert_eq!(css_minified, "body{color:red;}");
+    }
+
+    #[test]
+    fn test_js_minify_async() {
+        let minifier = Minifier::default();
+        let mut data = HashMap::new();
+        data.insert("test.js".to_string(), "function test() { return 1 + 1; }".to_string());
+        let js_minified = minifier.js_minify_async(data);
+        assert_eq!(js_minified.get("test.js").unwrap(), "function test(){return 1+1}");
+    }
+
+    #[test]
+    fn test_css_minify_async() {
+        let minifier = Minifier::default();
+        let mut data = HashMap::new();
+        data.insert("test.css".to_string(), "body { color: red; }".to_string());
+        let css_minified = minifier.css_minify_async(data);
+        assert_eq!(css_minified.get("test.css").unwrap(), "body{color:red;}");
+    }
+}

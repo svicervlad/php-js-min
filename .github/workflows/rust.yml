@@ -16,10 +16,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Install cargo-php
       run: cargo install cargo-php --verbose
+
+    - name: Run tests
+      run: cargo test
+
     - name: Build ext
       run: cargo build --release
+
     - name: Run test.php with librust_php_js_min.so extension
       run: php -dextension=./target/release/librust_php_js_min.so -f test.php
 
